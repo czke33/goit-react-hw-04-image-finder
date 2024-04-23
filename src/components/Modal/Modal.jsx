@@ -1,33 +1,31 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import style from "./Modal.module.css";
 import PropTypes from "prop-types";
 
-class Modal extends Component {
-  componentDidMount() {
-    document.addEventListener("keydown", this.props.escHandler);
-  }
+const Modal = (props) => {
+	const { src, alt, closeHandler, escHandler } = props;
+	useEffect(() => {
+		document.addEventListener("keydown", escHandler);
+		return () => {
+			document.removeEventListener("keydown", escHandler);
+		};
+	}, [escHandler]);
 
-  componentWillUnmount() {
-    document.removeEventListener("keydown", this.props.escHandler);
-  }
-
-  render() {
-    const { imgSrc, imgAlt, closeHandler } = this.props;
-    return (
-      <div className={style.overlay} onClick={closeHandler}>
-        <div className={style.modal}>
-          <img src={imgSrc} alt={imgAlt} />
-        </div>
-      </div>
-    );
-  }
-}
+	return (
+		<div className={style.overlay} onClick={closeHandler}>
+			<div className={style.modal}>
+				<img src={src} alt={alt} />
+			</div>
+		</div>
+	);
+};
 
 Modal.propTypes = {
-  imgSrc: PropTypes.string.isRequired,
-  imgAlt: PropTypes.string.isRequired,
-  closeHandler: PropTypes.func.isRequired,
-  escHandler: PropTypes.func.isRequired,
+	src: PropTypes.string.isRequired,
+	alt: PropTypes.string.isRequired,
+	closeHandler: PropTypes.func.isRequired,
+	escHandler: PropTypes.func.isRequired,
 };
 
 export default Modal;
+   
