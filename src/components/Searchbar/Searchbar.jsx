@@ -1,19 +1,18 @@
-import React, { Component } from "react";
+import React from "react";
 import style from "./Searchbar.module.css";
 import PropTypes from "prop-types";
 
-class Searchbar extends Component {
-  handleSumbit = (e) => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const query = form.elements.query.value;
-    this.props.onSubmit({ query });
-  };
+const Searchbar = (props) => {
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		const form = e.currentTarget;
+		const query = form.elements.query.value;
+		props.onSubmit({ query });
+	};
 
-  render() {
     return (
       <header className={style.searchbar}>
-        <form className={style.form} onSubmit={this.handleSumbit}>
+        <form className={style.form} onSubmit={handleSubmit}>
           <button type="submit" className={style.button}>
             <span className={style.buttonLabel}>Search</span>
           </button>
@@ -30,7 +29,7 @@ class Searchbar extends Component {
       </header>
     );
   }
-}
+
 
 Searchbar.propTypes = {
   onSubmit: PropTypes.func.isRequired,
