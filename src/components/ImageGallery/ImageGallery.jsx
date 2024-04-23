@@ -1,16 +1,18 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import ImageGalleryItem from "./ImageGalleryItem/ImageGalleryItem";
 import style from "./ImageGallery.module.css";
 import PropTypes from "prop-types";
 
-class ImageGallery extends Component {
-  componentDidUpdate(prevProps) {
-    if (this.props.page !== 1 && this.props.images.length !== prevProps.images.length) {
-      window.scrollBy({ top: 520, behavior: "smooth" });
-    }
-  }
-  render() {
-    const { images, clickHanlder } = this.props;
+const ImageGallery = (props) => {
+
+	const { images, clickHanlder } = props;
+
+	useEffect(() => {
+		if (images.length > 12) {
+			window.scrollBy({ top: 520, behavior: "smooth" });
+		}
+	}, [images]);
+
     return (
       <ul className={style.imageGallery}>
         {images.map((image) => {
@@ -28,7 +30,7 @@ class ImageGallery extends Component {
       </ul>
     );
   }
-}
+
 
 ImageGallery.propTypes = {
   page: PropTypes.number.isRequired,
